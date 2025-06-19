@@ -26,6 +26,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -41,7 +42,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-@EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"password", "roles"})
+@EqualsAndHashCode(of = {"id", "username", "email"}, callSuper = true)
 public class User extends DateAudit {
 
     @Id

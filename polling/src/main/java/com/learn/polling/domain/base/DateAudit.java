@@ -1,6 +1,5 @@
 package com.learn.polling.domain.base;
 
-
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -18,10 +17,7 @@ import lombok.Setter;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
-        allowGetters = true
-)
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 @Getter
 @Setter
 public abstract class DateAudit implements Serializable {
