@@ -1,4 +1,4 @@
-package com.learn.repository;
+package com.learn.polling.repository;
 
 import java.util.List;
 import java.util.Optional;
