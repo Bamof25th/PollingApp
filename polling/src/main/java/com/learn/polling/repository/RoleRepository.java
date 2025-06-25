@@ -11,6 +11,6 @@ import com.learn.polling.domain.RoleName;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Role> findByName(RoleName roleName);
+    Optional<Role> findByRole(RoleName roleName);
 
 }

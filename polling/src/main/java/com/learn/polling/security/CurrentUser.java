@@ -14,8 +14,4 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @AuthenticationPrincipal
 public @interface CurrentUser {
 
-    boolean required() default true;
-
-    String expression() default "";
-
 }

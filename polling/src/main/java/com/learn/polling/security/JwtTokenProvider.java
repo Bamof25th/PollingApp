@@ -18,20 +18,18 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-@AllArgsConstructor
 public class JwtTokenProvider {
 
     private final SecretKey secretKey;
     private final Long jwtExpirationTimeInMs;
 
     // We use constructor injection:
-    public JwtTokenProvider(@Value("&{app.jwtSecret}") String jwtSecret,
-            @Value("${app.jwtExpirationTime}") Long jwtExpirationTimeInMs) {
+    public JwtTokenProvider(@Value("${app.jwtSecret}") String jwtSecret,
+            @Value("${app.jwtExpirationInMs}") Long jwtExpirationTimeInMs) {
 
         this.secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         this.jwtExpirationTimeInMs = jwtExpirationTimeInMs;
