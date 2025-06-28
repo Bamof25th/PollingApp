@@ -1,7 +1,6 @@
 package com.learn.polling.domain;
 
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

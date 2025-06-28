@@ -1,21 +1,25 @@
 package com.learn.polling.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.learn.polling.domain.dtos.CurrentUserDto;
 import com.learn.polling.domain.dtos.UserDto;
 import com.learn.polling.domain.dtos.UserIdentityAvailabilityDto;
 import com.learn.polling.repository.UserRepository;
 import com.learn.polling.security.CurrentUser;
 import com.learn.polling.security.UserPrincipal;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/users")

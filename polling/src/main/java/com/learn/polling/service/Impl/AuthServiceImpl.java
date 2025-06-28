@@ -2,6 +2,7 @@ package com.learn.polling.service.Impl;
 
 import java.util.Collections;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import com.learn.polling.domain.RoleName;
 import com.learn.polling.domain.User;
 import com.learn.polling.domain.dtos.LoginRequest;
 import com.learn.polling.domain.dtos.SignUpRequest;
+import com.learn.polling.domain.dtos.UserDto;
 import com.learn.polling.repository.RoleRepository;
 import com.learn.polling.repository.UserRepository;
 import com.learn.polling.security.JwtTokenProvider;
@@ -31,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public String login(LoginRequest loginRequest) {
@@ -44,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public UserDto signUp(SignUpRequest signUpRequest) {
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new IllegalArgumentException("This email is Already Registered");
@@ -64,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
         newUser.setRoles(Collections.singleton(userRole));
 
         User savedUser = userRepository.save(newUser);
+        return modelMapper.map(savedUser, UserDto.class);
     }
-
 
 }

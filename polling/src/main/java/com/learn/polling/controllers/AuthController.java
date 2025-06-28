@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.learn.polling.domain.dtos.JwtAuthenticationResponse;
 import com.learn.polling.domain.dtos.LoginRequest;
 import com.learn.polling.domain.dtos.SignUpRequest;
+import com.learn.polling.domain.dtos.UserDto;
 import com.learn.polling.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -32,5 +33,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    public ResponseEntity<UserDto> userSignup(@Valid @RequestBody SignUpRequest signUpRequest) {
+        UserDto user = authService.signUp(signUpRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }
