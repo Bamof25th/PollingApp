@@ -24,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.learn.polling.security.CustomUserDetailsService;
 import com.learn.polling.security.JwtAuthenticationEntryPoint;
 import com.learn.polling.security.JwtAuthenticationFilter;
+import com.learn.polling.security.JwtTokenProvider;
 
 import lombok.AllArgsConstructor;
 
@@ -35,10 +36,11 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(customUserDetailsService, null);
+        return new JwtAuthenticationFilter(customUserDetailsService, jwtTokenProvider);
     }
 
     @Bean
@@ -69,11 +71,13 @@ public class SecurityConfig {
                         "/api/auth/**")
                         .permitAll()
 
-                        .requestMatchers("/api/user/checkUsernameAvailability",
-                                "/api/user/checkEmailAvailability")
+                        .requestMatchers("/api/users/user/checkUsernameAvailability",
+                                "/api/users/user/checkEmailAvailability")
                         .permitAll()
-                        // Public read-only endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**").permitAll()
+                        // Public read-only endpoints - be specific about which user endpoints are
+                        // public
+                        .requestMatchers(HttpMethod.GET, "/api/users/").permitAll() // Only the list users endpoint
+                        .requestMatchers(HttpMethod.GET, "/api/polls/**").permitAll()
 
                         // Health check endpoints
                         .requestMatchers("/actuator/health", "/health").permitAll()
@@ -89,7 +93,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*")); // TODO: Change to frontend URL in production
+        config.setAllowedOriginPatterns(List.of("*")); // Use setAllowedOriginPatterns instead of setAllowedOrigins when
+                                                       // credentials are enabled
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
