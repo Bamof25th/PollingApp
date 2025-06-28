@@ -59,3 +59,4 @@ public class UserController {
         return ResponseEntity.ok(new UserIdentityAvailabilityDto(check));
     }
 }
+
